@@ -1,0 +1,194 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ── NextAuth tables ──────────────────────────────────────────────────────────
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// ── App tables ───────────────────────────────────────────────────────────────
+
+model User {
+  id            String      @id @default(cuid())
+  name          String?
+  email         String?     @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  orgMembers    OrgMember[]
+  posts         Post[]
+  createdAt     DateTime    @default(now())
+}
+
+model Organization {
+  id             String          @id @default(cuid())
+  name           String
+  createdAt      DateTime        @default(now())
+  members        OrgMember[]
+  socialAccounts SocialAccount[]
+  mediaAssets    MediaAsset[]
+  posts          Post[]
+}
+
+model OrgMember {
+  id     String @id @default(cuid())
+  userId String
+  orgId  String
+  role   String @default("owner") // owner | admin | member (MVP: owner only)
+
+  user User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  org  Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, orgId])
+}
+
+enum Provider {
+  FACEBOOK
+  INSTAGRAM
+  LINKEDIN
+  TIKTOK
+}
+
+model SocialAccount {
+  id              String   @id @default(cuid())
+  orgId           String
+  provider        Provider
+  providerAccountId String? // external account id from provider
+  displayName     String?
+  accessTokenEnc  String   @db.Text
+  refreshTokenEnc String?  @db.Text
+  expiresAt       DateTime?
+  metadataJson    Json?    @default("{}")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  org Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+  @@index([orgId, provider])
+}
+
+model MediaAsset {
+  id          String   @id @default(cuid())
+  orgId       String
+  filename    String
+  url         String
+  mimeType    String
+  sizeBytes   Int
+  durationSec Float?
+  createdAt   DateTime @default(now())
+
+  org   Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  posts Post[]
+}
+
+model Post {
+  id              String        @id @default(cuid())
+  orgId           String
+  createdByUserId String
+  caption         String        @db.Text
+  hashtags        String?       @db.Text
+  mediaAssetId    String?
+  createdAt       DateTime      @default(now())
+
+  org         Organization  @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  createdBy   User          @relation(fields: [createdByUserId], references: [id])
+  mediaAsset  MediaAsset?   @relation(fields: [mediaAssetId], references: [id])
+  variants    PostVariant[]
+  publishJob  PublishJob?
+}
+
+model PostVariant {
+  id              String   @id @default(cuid())
+  postId          String
+  provider        Provider
+  enabled         Boolean  @default(true)
+  captionOverride String?  @db.Text
+
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, provider])
+}
+
+enum PublishStatus {
+  DRAFT
+  SCHEDULED
+  PUBLISHING
+  PUBLISHED
+  FAILED
+}
+
+model PublishJob {
+  id        String        @id @default(cuid())
+  postId    String        @unique
+  runAtUtc  DateTime
+  timezone  String        @default("UTC")
+  status    PublishStatus @default(SCHEDULED)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  post     Post             @relation(fields: [postId], references: [id], onDelete: Cascade)
+  attempts PublishAttempt[]
+}
+
+enum AttemptStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}
+
+model PublishAttempt {
+  id                   String        @id @default(cuid())
+  publishJobId         String
+  provider             Provider
+  status               AttemptStatus @default(PENDING)
+  externalId           String?
+  permalink            String?
+  errorCode            String?
+  errorMessage         String?
+  providerResponseJson Json?
+  attemptNumber        Int           @default(1)
+  createdAt            DateTime      @default(now())
+
+  publishJob PublishJob @relation(fields: [publishJobId], references: [id], onDelete: Cascade)
+
+  @@index([publishJobId])
+}
