@@ -8,7 +8,7 @@ import {
 } from "./types";
 
 const LINKEDIN_API = "https://api.linkedin.com";
-const LINKEDIN_VERSION = "202502"; // YYYYMM format
+const LINKEDIN_VERSION = "202602"; // YYYYMM format
 
 interface LinkedInMetadata {
   linkedInSub?: string;
