@@ -19,21 +19,21 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h1 className="text-center text-3xl font-bold text-blue-600">
+        <h1 className="text-center text-3xl font-bold text-blue-600 dark:text-blue-400">
           ⛰ Sherpa Marketing
         </h1>
-        <h2 className="mt-2 text-center text-sm text-gray-600">
+        <h2 className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
           Multi-platform social media publishing
         </h2>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="rounded-lg bg-white px-6 py-8 shadow ring-1 ring-gray-900/5 sm:px-10">
+        <div className="rounded-lg bg-white px-6 py-8 shadow ring-1 ring-gray-900/5 sm:px-10 dark:bg-gray-800 dark:ring-gray-700">
           {sent ? (
             <div className="text-center">
-              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-blue-100">
+              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/40">
                 <svg
-                  className="h-6 w-6 text-blue-600"
+                  className="h-6 w-6 text-blue-600 dark:text-blue-400"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
@@ -46,10 +46,10 @@ export default function LoginPage() {
                   />
                 </svg>
               </div>
-              <h3 className="mt-4 text-lg font-semibold text-gray-900">
+              <h3 className="mt-4 text-lg font-semibold text-gray-900 dark:text-white">
                 Check your email
               </h3>
-              <p className="mt-2 text-sm text-gray-600">
+              <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
                 We sent a sign-in link to <strong>{email}</strong>
               </p>
             </div>
@@ -60,7 +60,7 @@ export default function LoginPage() {
                 onClick={() =>
                   signIn("google", { callbackUrl: "/dashboard" })
                 }
-                className="flex w-full items-center justify-center gap-3 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-gray-300 hover:bg-gray-50 focus-visible:ring-2 focus-visible:ring-blue-500"
+                className="flex w-full items-center justify-center gap-3 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-gray-300 hover:bg-gray-50 focus-visible:ring-2 focus-visible:ring-blue-500 dark:bg-gray-700 dark:text-white dark:ring-gray-600 dark:hover:bg-gray-600"
               >
                 <svg className="h-5 w-5" viewBox="0 0 24 24">
                   <path
@@ -85,10 +85,10 @@ export default function LoginPage() {
 
               <div className="relative my-6">
                 <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-gray-300" />
+                  <div className="w-full border-t border-gray-300 dark:border-gray-600" />
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="bg-white px-2 text-gray-500">
+                  <span className="bg-white px-2 text-gray-500 dark:bg-gray-800 dark:text-gray-400">
                     Or continue with email
                   </span>
                 </div>
@@ -99,7 +99,7 @@ export default function LoginPage() {
                 <div>
                   <label
                     htmlFor="email"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300"
                   >
                     Email address
                   </label>
@@ -110,7 +110,7 @@ export default function LoginPage() {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
+                    className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-500"
                     placeholder="you@example.com"
                   />
                 </div>

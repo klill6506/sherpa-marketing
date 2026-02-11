@@ -18,16 +18,17 @@ export function formatDate(date: Date | string): string {
 export function statusColor(status: string): string {
   switch (status) {
     case "PUBLISHED":
-      return "bg-blue-100 text-blue-800";
+    case "SUCCESS":
+      return "bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300";
     case "SCHEDULED":
-      return "bg-amber-100 text-amber-800";
+      return "bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300";
     case "PUBLISHING":
-      return "bg-blue-100 text-blue-700";
+      return "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300";
     case "FAILED":
-      return "bg-red-100 text-red-800";
+      return "bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300";
     case "DRAFT":
-      return "bg-gray-100 text-gray-700";
+      return "bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300";
     default:
-      return "bg-gray-100 text-gray-600";
+      return "bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-400";
   }
 }

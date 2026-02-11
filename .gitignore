@@ -46,3 +46,13 @@ next-env.d.ts
 # uploads
 /uploads/*
 !/uploads/.gitkeep
+
+# claude code
+.claude/
+
+# credentials / secrets
+client_secret_*.json
+*.EXE
+
+# Windows artifacts
+nul

@@ -45,8 +45,8 @@ export function DashboardClient({
       {/* Header */}
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-          <p className="mt-1 text-sm text-gray-600">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
+          <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
             Overview of your social media publishing
           </p>
         </div>
@@ -60,27 +60,27 @@ export function DashboardClient({
 
       {/* Quick Stats */}
       <div className="mb-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
-        <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
-          <p className="text-sm text-gray-500">Total Posts</p>
-          <p className="mt-1 text-2xl font-bold text-gray-900">
+        <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+          <p className="text-sm text-gray-500 dark:text-gray-400">Total Posts</p>
+          <p className="mt-1 text-2xl font-bold text-gray-900 dark:text-white">
             {stats.total}
           </p>
         </div>
-        <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
-          <p className="text-sm text-gray-500">Scheduled</p>
-          <p className="mt-1 text-2xl font-bold text-amber-600">
+        <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+          <p className="text-sm text-gray-500 dark:text-gray-400">Scheduled</p>
+          <p className="mt-1 text-2xl font-bold text-amber-600 dark:text-amber-400">
             {stats.scheduled}
           </p>
         </div>
-        <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
-          <p className="text-sm text-gray-500">Published</p>
-          <p className="mt-1 text-2xl font-bold text-blue-600">
+        <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+          <p className="text-sm text-gray-500 dark:text-gray-400">Published</p>
+          <p className="mt-1 text-2xl font-bold text-blue-600 dark:text-blue-400">
             {stats.published}
           </p>
         </div>
-        <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
-          <p className="text-sm text-gray-500">Failed</p>
-          <p className="mt-1 text-2xl font-bold text-red-600">
+        <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+          <p className="text-sm text-gray-500 dark:text-gray-400">Failed</p>
+          <p className="mt-1 text-2xl font-bold text-red-600 dark:text-red-400">
             {stats.failed}
           </p>
         </div>
@@ -88,8 +88,8 @@ export function DashboardClient({
 
       {/* Quick Actions */}
       {(accountCount === 0 || stats.total === 0) && (
-        <div className="mb-8 rounded-lg border border-blue-200 bg-blue-50 p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-3">
+        <div className="mb-8 rounded-lg border border-blue-200 bg-blue-50 p-6 dark:border-blue-800 dark:bg-blue-900/30">
+          <h2 className="text-lg font-semibold text-gray-900 mb-3 dark:text-white">
             Get Started
           </h2>
           <div className="flex flex-wrap gap-3">
@@ -115,34 +115,34 @@ export function DashboardClient({
 
       {/* Posts Table */}
       {posts.length > 0 ? (
-        <div className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+        <div className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
+          <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+            <thead className="bg-gray-50 dark:bg-gray-900/50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
                   Post
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
                   Platforms
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
                   Status
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
                   Scheduled
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
                   Created
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-200">
+            <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
               {posts.map((post) => (
-                <tr key={post.id} className="hover:bg-gray-50">
+                <tr key={post.id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50">
                   <td className="px-6 py-4">
                     <Link
                       href={`/post/${post.id}`}
-                      className="text-sm font-medium text-blue-600 hover:text-blue-800"
+                      className="text-sm font-medium text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
                     >
                       {post.caption.length > 60
                         ? post.caption.slice(0, 60) + "..."
@@ -163,12 +163,14 @@ export function DashboardClient({
                         .map((v) => (
                           <span
                             key={v.provider}
-                            className="inline-flex items-center rounded bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600"
+                            className="inline-flex items-center rounded bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600 dark:bg-gray-700 dark:text-gray-300"
                           >
                             {v.provider === "FACEBOOK"
                               ? "FB"
                               : v.provider === "INSTAGRAM"
                               ? "IG"
+                              : v.provider === "LINKEDIN"
+                              ? "LI"
                               : v.provider}
                           </span>
                         ))}
@@ -179,12 +181,12 @@ export function DashboardClient({
                       status={post.publishJob?.status || "DRAFT"}
                     />
                   </td>
-                  <td className="px-6 py-4 text-sm text-gray-500">
+                  <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
                     {post.publishJob
                       ? new Date(post.publishJob.runAtUtc).toLocaleString()
                       : "—"}
                   </td>
-                  <td className="px-6 py-4 text-sm text-gray-500">
+                  <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
                     {new Date(post.createdAt).toLocaleDateString()}
                   </td>
                 </tr>
@@ -193,8 +195,8 @@ export function DashboardClient({
           </table>
         </div>
       ) : (
-        <div className="rounded-lg border border-gray-200 bg-white p-12 text-center shadow-sm">
-          <p className="text-gray-500">No posts yet</p>
+        <div className="rounded-lg border border-gray-200 bg-white p-12 text-center shadow-sm dark:border-gray-700 dark:bg-gray-800">
+          <p className="text-gray-500 dark:text-gray-400">No posts yet</p>
         </div>
       )}
     </div>

@@ -11,7 +11,7 @@ interface Account {
 }
 
 interface VariantState {
-  provider: "FACEBOOK" | "INSTAGRAM";
+  provider: "FACEBOOK" | "INSTAGRAM" | "LINKEDIN";
   enabled: boolean;
   captionOverride: string;
 }
@@ -44,9 +44,9 @@ export function ComposeClient({
     ...new Set(
       accounts
         .map((a) => a.provider)
-        .filter((p) => p === "FACEBOOK" || p === "INSTAGRAM")
+        .filter((p) => p === "FACEBOOK" || p === "INSTAGRAM" || p === "LINKEDIN")
     ),
-  ] as ("FACEBOOK" | "INSTAGRAM")[];
+  ] as ("FACEBOOK" | "INSTAGRAM" | "LINKEDIN")[];
 
   const [variants, setVariants] = useState<VariantState[]>(
     availableProviders.map((provider) => ({
@@ -158,13 +158,13 @@ export function ComposeClient({
   if (!hasAccounts) {
     return (
       <div className="text-center py-12">
-        <div className="mx-auto h-12 w-12 text-gray-400 mb-4 text-4xl">
+        <div className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500 mb-4 text-4xl">
           📱
         </div>
-        <h2 className="text-lg font-semibold text-gray-900">
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
           No accounts connected
         </h2>
-        <p className="mt-1 text-sm text-gray-600">
+        <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
           Connect a social media account before composing posts.
         </p>
         <Link
@@ -180,18 +180,18 @@ export function ComposeClient({
   return (
     <div className="max-w-3xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">Compose Post</h1>
-        <p className="mt-1 text-sm text-gray-600">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Compose Post</h1>
+        <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
           Create and publish content across your connected platforms
         </p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Caption */}
-        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
           <label
             htmlFor="caption"
-            className="block text-sm font-medium text-gray-700 mb-2"
+            className="block text-sm font-medium text-gray-700 mb-2 dark:text-gray-300"
           >
             Caption
           </label>
@@ -201,17 +201,17 @@ export function ComposeClient({
             onChange={(e) => setCaption(e.target.value)}
             required
             rows={4}
-            className="block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
+            className="block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-500"
             placeholder="What would you like to share?"
           />
-          <p className="mt-1 text-xs text-gray-500">
+          <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
             {caption.length} / 5,000 characters
           </p>
 
           <div className="mt-4">
             <label
               htmlFor="hashtags"
-              className="block text-sm font-medium text-gray-700 mb-2"
+              className="block text-sm font-medium text-gray-700 mb-2 dark:text-gray-300"
             >
               Hashtags
             </label>
@@ -220,15 +220,15 @@ export function ComposeClient({
               type="text"
               value={hashtags}
               onChange={(e) => setHashtags(e.target.value)}
-              className="block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
+              className="block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-500"
               placeholder="#marketing #socialmedia"
             />
           </div>
         </div>
 
         {/* Media Upload */}
-        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+          <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-gray-300">
             Media (optional)
           </label>
 
@@ -274,13 +274,13 @@ export function ComposeClient({
             <div className="flex items-center justify-center w-full">
               <label
                 htmlFor="file-upload"
-                className="flex w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 py-8 hover:bg-gray-100"
+                className="flex w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 py-8 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700/50 dark:hover:bg-gray-700"
               >
                 <div className="text-center">
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
                     {uploading ? "Uploading..." : "Click to upload image or video"}
                   </p>
-                  <p className="text-xs text-gray-500 mt-1">
+                  <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">
                     JPEG, PNG, GIF, WebP, MP4, MOV (max 100MB)
                   </p>
                 </div>
@@ -298,8 +298,8 @@ export function ComposeClient({
         </div>
 
         {/* Platform Selection + Overrides */}
-        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
-          <h3 className="text-sm font-medium text-gray-700 mb-4">
+        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+          <h3 className="text-sm font-medium text-gray-700 mb-4 dark:text-gray-300">
             Platforms
           </h3>
           <div className="space-y-4">
@@ -314,15 +314,17 @@ export function ComposeClient({
                       type="checkbox"
                       checked={variant.enabled}
                       onChange={() => toggleVariant(variant.provider)}
-                      className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                      className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700"
                     />
-                    <span className="text-sm font-medium text-gray-900">
+                    <span className="text-sm font-medium text-gray-900 dark:text-white">
                       {variant.provider === "FACEBOOK"
                         ? "Facebook"
+                        : variant.provider === "LINKEDIN"
+                        ? "LinkedIn"
                         : "Instagram"}
                     </span>
                     {account?.displayName && (
-                      <span className="text-xs text-gray-500">
+                      <span className="text-xs text-gray-500 dark:text-gray-400">
                         ({account.displayName})
                       </span>
                     )}
@@ -330,7 +332,7 @@ export function ComposeClient({
 
                   {variant.enabled && (
                     <div className="ml-7">
-                      <label className="block text-xs text-gray-500 mb-1">
+                      <label className="block text-xs text-gray-500 mb-1 dark:text-gray-400">
                         Caption override (optional)
                       </label>
                       <textarea
@@ -339,7 +341,7 @@ export function ComposeClient({
                           setOverride(variant.provider, e.target.value)
                         }
                         rows={2}
-                        className="block w-full rounded-md border border-gray-200 px-3 py-1.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                        className="block w-full rounded-md border border-gray-200 px-3 py-1.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-500"
                         placeholder="Leave blank to use main caption"
                       />
                     </div>
@@ -351,8 +353,8 @@ export function ComposeClient({
         </div>
 
         {/* Publish Mode */}
-        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
-          <h3 className="text-sm font-medium text-gray-700 mb-4">
+        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+          <h3 className="text-sm font-medium text-gray-700 mb-4 dark:text-gray-300">
             When to publish
           </h3>
           <div className="flex gap-4">
@@ -363,9 +365,9 @@ export function ComposeClient({
                 value="now"
                 checked={publishMode === "now"}
                 onChange={() => setPublishMode("now")}
-                className="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500"
+                className="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700"
               />
-              <span className="text-sm text-gray-900">Publish now</span>
+              <span className="text-sm text-gray-900 dark:text-gray-200">Publish now</span>
             </label>
             <label className="flex items-center gap-2">
               <input
@@ -374,9 +376,9 @@ export function ComposeClient({
                 value="schedule"
                 checked={publishMode === "schedule"}
                 onChange={() => setPublishMode("schedule")}
-                className="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500"
+                className="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700"
               />
-              <span className="text-sm text-gray-900">Schedule</span>
+              <span className="text-sm text-gray-900 dark:text-gray-200">Schedule</span>
             </label>
             <label className="flex items-center gap-2">
               <input
@@ -385,9 +387,9 @@ export function ComposeClient({
                 value="draft"
                 checked={publishMode === "draft"}
                 onChange={() => setPublishMode("draft")}
-                className="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500"
+                className="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700"
               />
-              <span className="text-sm text-gray-900">Save as draft</span>
+              <span className="text-sm text-gray-900 dark:text-gray-200">Save as draft</span>
             </label>
           </div>
 
@@ -396,7 +398,7 @@ export function ComposeClient({
               <div className="flex-1">
                 <label
                   htmlFor="scheduledAt"
-                  className="block text-xs text-gray-500 mb-1"
+                  className="block text-xs text-gray-500 mb-1 dark:text-gray-400"
                 >
                   Date &amp; Time
                 </label>
@@ -406,13 +408,13 @@ export function ComposeClient({
                   value={scheduledAt}
                   onChange={(e) => setScheduledAt(e.target.value)}
                   required
-                  className="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  className="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                 />
               </div>
               <div className="flex-1">
                 <label
                   htmlFor="timezone"
-                  className="block text-xs text-gray-500 mb-1"
+                  className="block text-xs text-gray-500 mb-1 dark:text-gray-400"
                 >
                   Timezone
                 </label>
@@ -421,7 +423,7 @@ export function ComposeClient({
                   type="text"
                   value={timezone}
                   onChange={(e) => setTimezone(e.target.value)}
-                  className="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  className="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                 />
               </div>
             </div>
@@ -430,8 +432,8 @@ export function ComposeClient({
 
         {/* Error */}
         {error && (
-          <div className="rounded-md bg-red-50 border border-red-200 p-4">
-            <p className="text-sm text-red-800">{error}</p>
+          <div className="rounded-md bg-red-50 border border-red-200 p-4 dark:bg-red-900/30 dark:border-red-800">
+            <p className="text-sm text-red-800 dark:text-red-300">{error}</p>
           </div>
         )}
 
@@ -440,7 +442,7 @@ export function ComposeClient({
           <button
             type="button"
             onClick={() => router.push("/dashboard")}
-            className="rounded-md bg-white px-4 py-2 text-sm font-semibold text-gray-700 ring-1 ring-gray-300 hover:bg-gray-50"
+            className="rounded-md bg-white px-4 py-2 text-sm font-semibold text-gray-700 ring-1 ring-gray-300 hover:bg-gray-50 dark:bg-gray-700 dark:text-gray-200 dark:ring-gray-600 dark:hover:bg-gray-600"
           >
             Cancel
           </button>

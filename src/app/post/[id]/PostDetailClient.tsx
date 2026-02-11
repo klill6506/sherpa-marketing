@@ -48,15 +48,15 @@ export function PostDetailClient({ post }: { post: PostDetail }) {
       {/* Back link */}
       <Link
         href="/dashboard"
-        className="text-sm text-blue-600 hover:text-blue-800 mb-4 inline-block"
+        className="text-sm text-blue-600 hover:text-blue-800 mb-4 inline-block dark:text-blue-400 dark:hover:text-blue-300"
       >
         &larr; Back to Dashboard
       </Link>
 
       {/* Post content */}
-      <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm mb-6">
+      <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm mb-6 dark:border-gray-700 dark:bg-gray-800">
         <div className="flex items-start justify-between mb-4">
-          <h1 className="text-xl font-bold text-gray-900">Post Details</h1>
+          <h1 className="text-xl font-bold text-gray-900 dark:text-white">Post Details</h1>
           {post.publishJob && (
             <StatusBadge status={post.publishJob.status} />
           )}
@@ -65,26 +65,26 @@ export function PostDetailClient({ post }: { post: PostDetail }) {
 
         <div className="space-y-4">
           <div>
-            <label className="block text-xs font-medium text-gray-500 mb-1">
+            <label className="block text-xs font-medium text-gray-500 mb-1 dark:text-gray-400">
               Caption
             </label>
-            <p className="text-sm text-gray-900 whitespace-pre-wrap">
+            <p className="text-sm text-gray-900 whitespace-pre-wrap dark:text-gray-100">
               {post.caption}
             </p>
           </div>
 
           {post.hashtags && (
             <div>
-              <label className="block text-xs font-medium text-gray-500 mb-1">
+              <label className="block text-xs font-medium text-gray-500 mb-1 dark:text-gray-400">
                 Hashtags
               </label>
-              <p className="text-sm text-blue-600">{post.hashtags}</p>
+              <p className="text-sm text-blue-600 dark:text-blue-400">{post.hashtags}</p>
             </div>
           )}
 
           {post.mediaAsset && (
             <div>
-              <label className="block text-xs font-medium text-gray-500 mb-1">
+              <label className="block text-xs font-medium text-gray-500 mb-1 dark:text-gray-400">
                 Media
               </label>
               {post.mediaAsset.mimeType.startsWith("video/") ? (
@@ -100,14 +100,14 @@ export function PostDetailClient({ post }: { post: PostDetail }) {
                   className="max-h-48 rounded-lg object-cover"
                 />
               )}
-              <p className="mt-1 text-xs text-gray-500">
+              <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
                 {post.mediaAsset.filename} (
                 {(post.mediaAsset.sizeBytes / 1024).toFixed(0)} KB)
               </p>
             </div>
           )}
 
-          <div className="flex gap-6 text-xs text-gray-500">
+          <div className="flex gap-6 text-xs text-gray-500 dark:text-gray-400">
             <span>
               Created by {post.createdBy.name || post.createdBy.email}
             </span>
@@ -119,8 +119,8 @@ export function PostDetailClient({ post }: { post: PostDetail }) {
       </div>
 
       {/* Variants */}
-      <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm mb-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">
+      <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm mb-6 dark:border-gray-700 dark:bg-gray-800">
+        <h2 className="text-lg font-semibold text-gray-900 mb-4 dark:text-white">
           Platform Variants
         </h2>
         <div className="space-y-3">
@@ -129,22 +129,24 @@ export function PostDetailClient({ post }: { post: PostDetail }) {
               key={v.id}
               className={`rounded-lg border p-4 ${
                 v.enabled
-                  ? "border-blue-200 bg-blue-50"
-                  : "border-gray-200 bg-gray-50 opacity-60"
+                  ? "border-blue-200 bg-blue-50 dark:border-blue-800 dark:bg-blue-900/30"
+                  : "border-gray-200 bg-gray-50 opacity-60 dark:border-gray-700 dark:bg-gray-900/30"
               }`}
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-gray-900">
+                  <span className="text-sm font-medium text-gray-900 dark:text-white">
                     {v.provider === "FACEBOOK"
                       ? "Facebook"
                       : v.provider === "INSTAGRAM"
                       ? "Instagram"
+                      : v.provider === "LINKEDIN"
+                      ? "LinkedIn"
                       : v.provider}
                   </span>
                   <span
                     className={`text-xs ${
-                      v.enabled ? "text-blue-600" : "text-gray-500"
+                      v.enabled ? "text-blue-600 dark:text-blue-400" : "text-gray-500 dark:text-gray-400"
                     }`}
                   >
                     {v.enabled ? "Enabled" : "Disabled"}
@@ -152,8 +154,8 @@ export function PostDetailClient({ post }: { post: PostDetail }) {
                 </div>
               </div>
               {v.captionOverride && (
-                <p className="mt-2 text-sm text-gray-700 whitespace-pre-wrap">
-                  <span className="text-xs font-medium text-gray-500">
+                <p className="mt-2 text-sm text-gray-700 whitespace-pre-wrap dark:text-gray-300">
+                  <span className="text-xs font-medium text-gray-500 dark:text-gray-400">
                     Caption Override:{" "}
                   </span>
                   {v.captionOverride}
@@ -166,36 +168,36 @@ export function PostDetailClient({ post }: { post: PostDetail }) {
 
       {/* Schedule & Job Info */}
       {post.publishJob && (
-        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm mb-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">
+        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm mb-6 dark:border-gray-700 dark:bg-gray-800">
+          <h2 className="text-lg font-semibold text-gray-900 mb-4 dark:text-white">
             Publish Job
           </h2>
           <dl className="grid grid-cols-2 gap-4 text-sm">
             <div>
-              <dt className="text-xs font-medium text-gray-500">Status</dt>
+              <dt className="text-xs font-medium text-gray-500 dark:text-gray-400">Status</dt>
               <dd className="mt-1">
                 <StatusBadge status={post.publishJob.status} />
               </dd>
             </div>
             <div>
-              <dt className="text-xs font-medium text-gray-500">
+              <dt className="text-xs font-medium text-gray-500 dark:text-gray-400">
                 Scheduled For
               </dt>
-              <dd className="mt-1 text-gray-900">
+              <dd className="mt-1 text-gray-900 dark:text-gray-100">
                 {new Date(post.publishJob.runAtUtc).toLocaleString()}
               </dd>
             </div>
             <div>
-              <dt className="text-xs font-medium text-gray-500">Timezone</dt>
-              <dd className="mt-1 text-gray-900">
+              <dt className="text-xs font-medium text-gray-500 dark:text-gray-400">Timezone</dt>
+              <dd className="mt-1 text-gray-900 dark:text-gray-100">
                 {post.publishJob.timezone}
               </dd>
             </div>
             <div>
-              <dt className="text-xs font-medium text-gray-500">
+              <dt className="text-xs font-medium text-gray-500 dark:text-gray-400">
                 Last Updated
               </dt>
-              <dd className="mt-1 text-gray-900">
+              <dd className="mt-1 text-gray-900 dark:text-gray-100">
                 {new Date(post.publishJob.updatedAt).toLocaleString()}
               </dd>
             </div>
@@ -205,8 +207,8 @@ export function PostDetailClient({ post }: { post: PostDetail }) {
 
       {/* Publish Attempts */}
       {post.publishJob && post.publishJob.attempts.length > 0 && (
-        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">
+        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+          <h2 className="text-lg font-semibold text-gray-900 mb-4 dark:text-white">
             Publish Attempts
           </h2>
           <div className="space-y-3">
@@ -215,33 +217,35 @@ export function PostDetailClient({ post }: { post: PostDetail }) {
                 key={attempt.id}
                 className={`rounded-lg border p-4 ${
                   attempt.status === "SUCCESS"
-                    ? "border-blue-200 bg-blue-50"
+                    ? "border-blue-200 bg-blue-50 dark:border-blue-800 dark:bg-blue-900/30"
                     : attempt.status === "FAILED"
-                    ? "border-red-200 bg-red-50"
-                    : "border-gray-200 bg-gray-50"
+                    ? "border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-900/30"
+                    : "border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-900/30"
                 }`}
               >
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-3">
-                    <span className="text-sm font-medium text-gray-900">
+                    <span className="text-sm font-medium text-gray-900 dark:text-white">
                       {attempt.provider === "FACEBOOK"
                         ? "Facebook"
                         : attempt.provider === "INSTAGRAM"
                         ? "Instagram"
+                        : attempt.provider === "LINKEDIN"
+                        ? "LinkedIn"
                         : attempt.provider}
                     </span>
                     <StatusBadge status={attempt.status} />
-                    <span className="text-xs text-gray-500">
+                    <span className="text-xs text-gray-500 dark:text-gray-400">
                       Attempt #{attempt.attemptNumber}
                     </span>
                   </div>
-                  <span className="text-xs text-gray-500">
+                  <span className="text-xs text-gray-500 dark:text-gray-400">
                     {new Date(attempt.createdAt).toLocaleString()}
                   </span>
                 </div>
 
                 {attempt.externalId && (
-                  <p className="text-xs text-gray-600">
+                  <p className="text-xs text-gray-600 dark:text-gray-400">
                     External ID: {attempt.externalId}
                   </p>
                 )}
@@ -250,17 +254,17 @@ export function PostDetailClient({ post }: { post: PostDetail }) {
                     href={attempt.permalink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-xs text-blue-600 hover:underline"
+                    className="text-xs text-blue-600 hover:underline dark:text-blue-400"
                   >
                     View on platform &rarr;
                   </a>
                 )}
                 {attempt.errorMessage && (
-                  <div className="mt-2 rounded bg-red-100 px-3 py-2 text-xs text-red-800">
+                  <div className="mt-2 rounded bg-red-100 px-3 py-2 text-xs text-red-800 dark:bg-red-900/40 dark:text-red-300">
                     <span className="font-medium">Error:</span>{" "}
                     {attempt.errorMessage}
                     {attempt.errorCode && (
-                      <span className="ml-2 text-red-600">
+                      <span className="ml-2 text-red-600 dark:text-red-400">
                         ({attempt.errorCode})
                       </span>
                     )}

@@ -57,20 +57,20 @@ export function OrgClient({
   return (
     <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-lg">
-        <h1 className="text-center text-2xl font-bold text-gray-900">
+        <h1 className="text-center text-2xl font-bold text-gray-900 dark:text-white">
           Your Organizations
         </h1>
-        <p className="mt-2 text-center text-sm text-gray-600">
+        <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
           Select or create an organization to get started
         </p>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-lg">
-        <div className="rounded-lg bg-white px-6 py-8 shadow ring-1 ring-gray-900/5 sm:px-10">
+        <div className="rounded-lg bg-white px-6 py-8 shadow ring-1 ring-gray-900/5 sm:px-10 dark:bg-gray-800 dark:ring-gray-700">
           {/* Existing orgs */}
           {orgs.length > 0 && (
             <div className="mb-6">
-              <h3 className="text-sm font-medium text-gray-700 mb-3">
+              <h3 className="text-sm font-medium text-gray-700 mb-3 dark:text-gray-300">
                 Your organizations
               </h3>
               <ul className="space-y-2">
@@ -78,20 +78,20 @@ export function OrgClient({
                   <li key={org.id}>
                     <button
                       onClick={() => selectOrg(org.id)}
-                      className={`w-full flex items-center justify-between rounded-lg border px-4 py-3 text-left hover:bg-gray-50 ${
+                      className={`w-full flex items-center justify-between rounded-lg border px-4 py-3 text-left hover:bg-gray-50 dark:hover:bg-gray-700 ${
                         org.id === currentOrgId
-                          ? "border-blue-500 bg-blue-50"
-                          : "border-gray-200"
+                          ? "border-blue-500 bg-blue-50 dark:bg-blue-900/30"
+                          : "border-gray-200 dark:border-gray-600"
                       }`}
                     >
                       <div>
-                        <p className="font-medium text-gray-900">{org.name}</p>
-                        <p className="text-xs text-gray-500 capitalize">
+                        <p className="font-medium text-gray-900 dark:text-white">{org.name}</p>
+                        <p className="text-xs text-gray-500 capitalize dark:text-gray-400">
                           {org.role}
                         </p>
                       </div>
                       {org.id === currentOrgId && (
-                        <span className="text-xs font-medium text-blue-600">
+                        <span className="text-xs font-medium text-blue-600 dark:text-blue-400">
                           Active
                         </span>
                       )}
@@ -104,7 +104,7 @@ export function OrgClient({
 
           {/* Create new org */}
           <div>
-            <h3 className="text-sm font-medium text-gray-700 mb-3">
+            <h3 className="text-sm font-medium text-gray-700 mb-3 dark:text-gray-300">
               Create a new organization
             </h3>
             <form onSubmit={handleCreate} className="flex gap-3">
@@ -114,7 +114,7 @@ export function OrgClient({
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Organization name"
                 required
-                className="block flex-1 rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
+                className="block flex-1 rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-500"
               />
               <button
                 type="submit"
@@ -125,7 +125,7 @@ export function OrgClient({
               </button>
             </form>
             {error && (
-              <p className="mt-2 text-sm text-red-600">{error}</p>
+              <p className="mt-2 text-sm text-red-600 dark:text-red-400">{error}</p>
             )}
           </div>
         </div>
